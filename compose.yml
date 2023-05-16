@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  web:
+    image: webdevops/php-apache:alpine-php7
+    ports:
+      - "80:80"
+    volumes:
+      - ./website/:/app
+      
+    networks:
+      - minha-rede
+      
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "Senha123"
+      MYSQL_DATABASE: "testedb"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql-C:/var/lib/mysql
+    networks:
+      - minha-rede
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - minha-rede
+
+networks:
+  minha-rede:
+    driver: bridge
